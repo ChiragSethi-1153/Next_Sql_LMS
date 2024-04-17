@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('books', {
-    
+      
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
