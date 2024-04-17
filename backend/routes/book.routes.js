@@ -1,11 +1,13 @@
 const { bookController } = require('../controller')
+const { verifyToken } = require('../middleware/auth')
+const { upload } = require('../middleware/upload')
 
 const router = require('express').Router()
 
-router.post("/books", bookController.addBook)
+router.post("/books", verifyToken, upload, bookController.addBook)
 router.get("/books", bookController.getAllBooks)
-router.get("/books/:bookId", bookController.searchBooks)
-router.put("/books", bookController.editBook)
-router.delete("/books", bookController.deleteBook)
+router.get("/books/:bookId", bookController.getBook)
+router.put("/books", verifyToken, upload, bookController.editBook)
+router.delete("/books/:bookId", verifyToken, bookController.deleteBook)
 
 module.exports = router 

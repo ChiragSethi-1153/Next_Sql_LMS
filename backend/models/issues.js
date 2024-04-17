@@ -31,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     borrowDate: DataTypes.DATE,
     returnDate: DataTypes.DATE,
-    lastDate: DataTypes.DATE
+    lastDate: DataTypes.DATE,
+    status: {
+      type: DataTypes.ENUM("borrowed", "returned", "pending"),
+      defaultValue: "borrowed"
+    }
   }, {
     sequelize,
     modelName: 'issues',

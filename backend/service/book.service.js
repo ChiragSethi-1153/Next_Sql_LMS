@@ -1,21 +1,14 @@
-const {books, users} = require("../models");
-
+const { books, users } = require("../models");
+const { Op } = require('@sequelize/core');
 
 exports.addBook = async (req) => {
     try {
-        console.log(req.body)
         const userId = req.id
-        console.log(userId)
+        const role = req.role
 
-        const admin = await users.find({ _id: userId })
-        console.log(admin)
-        
-        const role = admin.map((i) => i.role)
-        console.log(role[0])
+        if (role === 'admin') {
 
-        if (role[0] === 'admin') {
-
-            const { title, author, quantity, genre } = req.body
+            const { title, author, genre, stock } = req.body
 
             let newImage = [];
             if (req.files !== null && req.files.images && req.files.images.length > 0) {
@@ -25,21 +18,18 @@ exports.addBook = async (req) => {
                 console.log(newImage, "ghvugyiv");
             }
 
-            const book = await new Books({
+            const book = await books.create({
                 title,
                 author,
                 genre,
-                quantity,
+                stock: parseInt(stock),
                 coverImage: newImage
             })
-            await book.save()
             console.log(book)
-
             return book
         }
         else {
-            const response = 401
-            return response
+            return 401
         }
 
     } catch (err) {
@@ -51,16 +41,13 @@ exports.addBook = async (req) => {
 
 exports.editBook = async (req) => {
     try {
-        const userId = req.id
-        console.log(userId)
-        const admin = await users.find({ _id: userId })
-        console.log(admin)
-        const role = admin.map((i) => i.role)
-        console.log(role[0])
+        // const userId = req.id
+        const role = req.role
 
-        if (role[0] === 'admin') {
-            const { bookId } = req.params
-            const { title, author, quantity, genre } = req.body
+
+        if (role === 'admin') {
+            const { bookId } = req.query
+            const { title, author, stock, genre } = req.body
 
             let newImage = [];
             if (req.files !== null && req.files.images && req.files.images.length > 0) {
@@ -70,14 +57,18 @@ exports.editBook = async (req) => {
                 console.log(newImage, "ghvugyiv");
             }
 
-            const book = await books.findByIdAndUpdate(bookId, {
+            const book = await books.update({
                 title,
                 author,
                 genre,
-                quantity,
-                // coverImage: newImage
+                stock: parseInt(stock),
+                // coverImage: newImage,
             },
-                { new: true }
+                {
+                    where: {
+                        id: bookId
+                    }
+                }
             )
 
             console.log(book)
@@ -85,8 +76,7 @@ exports.editBook = async (req) => {
             return book
         }
         else {
-            const response = 401
-            return response
+            return 401
         }
     } catch (err) {
         console.log(err)
@@ -96,17 +86,12 @@ exports.editBook = async (req) => {
 
 exports.deleteBook = async (req) => {
     try {
-        const userId = req.id
-        console.log(userId)
-        const admin = await users.find({ _id: userId })
-        console.log(admin)
-        const role = admin.map((i) => i.role)
-        console.log(role[0])
+        const role = req.role
 
-        if (role[0] === 'admin') {
+        if (role === 'admin') {
             const { bookId } = req.params
-
-            const book = await books.findByIdAndDelete(bookId)
+            // console.log(bookId)
+            const book = await books.destroy({ where: { id: bookId } })
 
             console.log(book)
 
@@ -124,11 +109,31 @@ exports.deleteBook = async (req) => {
 
 exports.getAllBooks = async (req) => {
     try {
-        const userId = req.id
-        console.log(userId)
 
-        const books = await books.find({}).sort({ createdAt: -1 })
-        return books
+        const { body } = req.query
+        if (body) {
+            const allbooks = await books.findAll({
+                where: {
+                    [Op.or]: {
+                        title: {
+                            [Op.iLike]: `%${body}%`,
+                        },
+                        author: {
+                            [Op.iLike]: `%${body}%`,
+                        },
+                        genre: {
+                            [Op.iLike]: `%${body}%`,
+                        }
+                    },       
+                },
+                limit: 10
+            })
+            return allbooks
+        }
+        else {
+            const allbooks = await books.findAll({ limit: 10 })
+            return allbooks
+        }
 
     } catch (err) {
         console.log(err)
@@ -136,20 +141,23 @@ exports.getAllBooks = async (req) => {
     }
 }
 
-exports.searchBooks = async (req) => {
+exports.getBook = async (req) => {
     try {
-        const userId = req.id
-        console.log(userId)
-        const { body } = req.query
-        const books = await books.find({ "$or": [{ "title": { $regex: ".*" + body + ".*", $options: 'i' } }, { "author": { $regex: ".*" + body + ".*", $options: 'i' } }, { "genre": { $regex: ".*" + body + ".*", $options: 'i' } }] })
+        
+        const { bookId } = req.params
 
-        if (books.length > 0) {
-            return books
+        const book = await books.findOne({
+            where: {
+                id: bookId
+            }
+        })
+
+        if (book) {
+            return book
         }
         else {
             return 404
         }
-
 
     } catch (err) {
         console.log(err)

@@ -61,9 +61,9 @@ exports.getAllBooks = async (req, res) => {
     }
 }
 
-exports.searchBooks = async (req, res) => {
+exports.getBook = async (req, res) => {
     try{
-        const response = await bookService.searchBooks(req)
+        const response = await bookService.getBook(req)
         if(response === 404 ){
             return res.status(404).json({message: 'No book found'})
         }

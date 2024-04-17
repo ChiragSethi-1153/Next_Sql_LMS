@@ -19,6 +19,10 @@ module.exports = {
       borrowDate: Sequelize.DATE, 
       returnDate: Sequelize.DATE,
       lastDate: Sequelize.DATE,
+      status: {
+        type: Sequelize.ENUM("borrowed", "returned", "pending"),
+        defaultValue: "borrowed"
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
