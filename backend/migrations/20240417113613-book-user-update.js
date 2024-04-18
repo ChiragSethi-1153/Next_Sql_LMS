@@ -11,16 +11,24 @@ module.exports = {
      */
     await queryInterface.addColumn('books', 'admin', {
       type: Sequelize.UUID,
-      allowNull: false,
+      // allowNull: false,
+      defaultValue: 'e97f9fd7-79c1-4ceb-8479-1d22705cc486',
       references: {
         model: 'users',
         key: 'id'
       }
     })
+
     
-    await queryInterface.sequelize.query(
-        'UPDATE books SET admin=false' 
-      );
+      await queryInterface.changeColumn('books', 'admin', {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      })
+
     await queryInterface.changeColumn('issues', 'userId', {
       type: Sequelize.UUID,
       allowNull: false,

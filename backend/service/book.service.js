@@ -21,6 +21,7 @@ exports.addBook = async (req) => {
             const book = await books.create({
                 title,
                 author,
+                admin: userId,
                 genre,
                 stock: parseInt(stock),
                 coverImage: newImage
@@ -41,39 +42,45 @@ exports.addBook = async (req) => {
 
 exports.editBook = async (req) => {
     try {
-        // const userId = req.id
+        const userId = req.id
         const role = req.role
 
 
         if (role === 'admin') {
             const { bookId } = req.query
             const { title, author, stock, genre } = req.body
+            
 
-            let newImage = [];
-            if (req.files !== null && req.files.images && req.files.images.length > 0) {
-                newImage = req.files.images.map((i) => {
-                    return i.path;
-                });
-                console.log(newImage, "ghvugyiv");
-            }
-
-            const book = await books.update({
-                title,
-                author,
-                genre,
-                stock: parseInt(stock),
-                // coverImage: newImage,
-            },
+                let newImage = [];
+                if (req.files !== null && req.files.images && req.files.images.length > 0) {
+                    newImage = req.files.images.map((i) => {
+                        return i.path;
+                    });
+                    console.log(newImage, "ghvugyiv");
+                }
+                
+                const book = await books.update({
+                    title,
+                    author,
+                    genre,
+                    stock: parseInt(stock),
+                    // coverImage: newImage,
+                },
                 {
                     where: {
-                        id: bookId
+                        id: bookId,
+                        admin: userId
                     }
                 }
             )
-
-            console.log(book)
-
-            return book
+            if(book){
+                console.log(book)   
+                return book
+            }
+            else{
+                return 401
+            }
+        
         }
         else {
             return 401
@@ -86,20 +93,23 @@ exports.editBook = async (req) => {
 
 exports.deleteBook = async (req) => {
     try {
+        const userId = req.id
         const role = req.role
 
         if (role === 'admin') {
             const { bookId } = req.params
             // console.log(bookId)
-            const book = await books.destroy({ where: { id: bookId } })
-
-            console.log(book)
-
-            return book
+            const book = await books.destroy({ where: { id: bookId, admin: userId } })
+            if(book){
+                console.log(book)
+                return book
+            }
+            else{
+                return 401
+            }
         }
         else {
-            const response = 401
-            return response
+            return 401
         }
     } catch (err) {
         console.log(err)
@@ -131,7 +141,7 @@ exports.getAllBooks = async (req) => {
             return allbooks
         }
         else {
-            const allbooks = await books.findAll({ limit: 10 })
+            const allbooks = await books.findAll({ where: {}, include: [{ model: users, where: {} } ], limit: 10 })
             return allbooks
         }
 
