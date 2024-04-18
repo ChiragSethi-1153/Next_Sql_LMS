@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({issues}) {
+    static associate({issues, users}) {
       // define association here
       this.hasMany(issues, {foreignKey: 'bookId'})
-
+      this.belongsTo(users, {foreignKey: 'admin'} )
     }
   }
   books.init({
@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
+    },
+    admin: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     title: {
       type: DataTypes.STRING,

@@ -23,11 +23,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     bookId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'books',
+        key: 'id'
+      }
     },
     borrowDate: DataTypes.DATE,
     returnDate: DataTypes.DATE,
