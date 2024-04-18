@@ -3,11 +3,19 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('books', {
-      
+
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
+      },
+      admin: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'users',
+          key: 'id',
+
+        },        
       },
       title: {
         type: Sequelize.STRING,

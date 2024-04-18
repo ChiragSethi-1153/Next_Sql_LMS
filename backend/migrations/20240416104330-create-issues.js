@@ -10,11 +10,19 @@ module.exports = {
       },
       userId: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       bookId: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'books',
+          key: 'id'
+        }
       },
       borrowDate: Sequelize.DATE, 
       returnDate: Sequelize.DATE,
