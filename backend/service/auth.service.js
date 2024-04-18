@@ -40,8 +40,15 @@ exports.signup = async (req) => {
         password: hashedPassword,
         role
       });
+      
+        const details = {
+          name,
+          email,
+          role
+        } 
+        return details;
 
-      return user;
+      
     } else if (!isEmailValid) {
       return 405;
     } else if (!isPasswordValid) {

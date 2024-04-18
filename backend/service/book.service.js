@@ -141,7 +141,7 @@ exports.getAllBooks = async (req) => {
             return allbooks
         }
         else {
-            const allbooks = await books.findAll({ where: {}, include: [{ model: users, where: {} } ], limit: 10 })
+            const allbooks = await books.findAll({ where: {}, include: [{ model: users, where: {}, attributes: {exclude: ['password'] }}], limit: 10 })
             return allbooks
         }
 
