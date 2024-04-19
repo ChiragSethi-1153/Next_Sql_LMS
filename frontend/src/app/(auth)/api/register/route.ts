@@ -1,0 +1,25 @@
+import axios from "axios"
+import { NextResponse } from "next/server"
+import { registerSchema } from "@/components/Register/RegisterForm";
+
+export async function POST(request: Request) {
+    try{
+
+        // console.log(await request.json())
+        const a = await request.json()
+        console.log(a)
+        // const result = registerSchema.safeParse(a)
+        // console.log(result)
+        const res  = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, a)
+        console.log(res)
+        
+        if(!res) {
+                alert("submitting form failed")
+                return
+            }
+            
+            return NextResponse.json(res.data)
+        }catch(err){
+            console.log(err)
+        }
+    }
