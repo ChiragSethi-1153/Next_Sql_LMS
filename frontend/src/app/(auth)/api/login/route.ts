@@ -11,14 +11,14 @@ export async function POST(request: Request) {
         // const result = registerSchema.safeParse(a)
         // console.log(result)
         const res  = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, a)
-        console.log(res)
+        console.log(res.data)
         
         if(!res) {
                 alert("submitting form failed")
                 return
             }
-            
             return NextResponse.json(res.data)
+        
         }catch(err){
             console.log(err)
         }

@@ -18,6 +18,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppDispatch } from "@/store/hooks";
 import { registerUsers } from "@/features/Auth/authAction";
+import Link from "next/link";
 
 export const registerSchema = z.object({
   role: z.string(),
@@ -48,7 +49,7 @@ const RegisterForm = () => {
 
   return (
     <Paper className={styles.signupFormBox}>
-      <Stack className={styles.formStack} gap={1}>
+      <Stack className={styles.formStack} gap={1} >
         <Typography
           align="left"
           sx={{
@@ -121,14 +122,14 @@ const RegisterForm = () => {
           Sign up
         </Button>
 
-        <Typography>
+        <Link href={'/login'} style={{textAlign: 'center'}}>
           Already have an account{" "}
           <span
             style={{ color: "#0b66c2", fontWeight: "600", cursor: "pointer" }}
           >
             Login?
           </span>
-        </Typography>
+        </Link>
       </Stack>
     </Paper>
   );

@@ -4,11 +4,13 @@ const key = process.env.JWT_KEY
 
 exports.verifyToken = async (req, res, next) => {
     try {
-        const header = req.headers[`authorization`]
+        const token = req.cookies.authorization
+        
+        // console.log(header)
         // console.log(req.headers)
-        const token = header.split(" ")[1]
+        // const token = header.split(" ")[1]
         // console.log(token)
-        // console.log(token); 
+
         if (!token) {
             return res.status(404).json({ message: "No token Found" })
         }
@@ -18,6 +20,7 @@ exports.verifyToken = async (req, res, next) => {
                     return res.status(400).json({ message: "Invalid Token" })
                 }
                 else {
+                    console.log(user.role)
                     // console.log(user.id);
                     req.id = user.id
                     req.role = user.role

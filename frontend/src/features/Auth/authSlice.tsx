@@ -10,10 +10,9 @@ type initialStateProps = {
         email: string;
         name: string;
         role: string;
-        status: string;
-        uuid: string;
+        id: string;
       };
-      token: string;
+      
     } 
     error: Object | null;
   };
@@ -28,10 +27,9 @@ type initialStateProps = {
         email: '',
         name: '',
         role: '',
-        status: '',
-        uuid: '',
+        id: '',
       },
-      token: ''
+    
     },
   };
 
@@ -40,17 +38,18 @@ export const authSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-        // builder.addCase(loginUsers.pending, (state) => {
-        //     state.isLoading = true
-        // })
-        // builder.addCase(loginUsers.fulfilled, (state, action) => {
-        //     state.isLoading = false
-        //     state.content = action.payload
-        // })
-        // builder.addCase(loginUsers.rejected, (state, action) => {
-        //     state.isLoading = false
-        //     state.error = action.error
-        // })
+        builder.addCase(loginUsers.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(loginUsers.fulfilled, (state, action) => {
+            state.isLoading = false
+            console.log(action.payload)
+            state.content = action.payload
+        })
+        builder.addCase(loginUsers.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = action.error
+        })
         builder.addCase(registerUsers.pending, (state) => {
             state.isLoading = true
         })

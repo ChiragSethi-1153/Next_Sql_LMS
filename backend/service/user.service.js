@@ -6,7 +6,8 @@ exports.getAllUsers = async (req) => {
     try {
         const userId = req.id
         const { role } = req.query
-        
+        console.log(userId, role)
+
         if (role) {
                 const user = await users.findAll({where: { role: role}, attributes: {exclude: ['password']}}  )
                 if(user){

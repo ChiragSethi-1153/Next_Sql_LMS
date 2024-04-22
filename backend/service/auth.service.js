@@ -78,12 +78,15 @@ exports.login = async (req, res) => {
     if (!isPasswordCorrect) {
       return 400;
     }
+
     console.log(' id: existingUser.id, role: existingUser.role: ', key, existingUser.id,  existingUser.role);
     const token = jwt.sign({ id: existingUser.id, role: existingUser.role }, key, {
       expiresIn: "48hr",
     });
+    
     console.log("Generated Token\n", token);
     const data = {
+      id: existingUser.id,
       name: existingUser.name,
       email: existingUser.email,
       role: existingUser.role
