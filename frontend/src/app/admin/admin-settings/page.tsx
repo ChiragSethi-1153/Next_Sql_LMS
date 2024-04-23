@@ -2,13 +2,12 @@ import Header from '@/components/Header/Header'
 import { Stack } from '@mui/material'
 import React from 'react'
 
-const AllBooks = () => {
+const AdminSettings = () => {
   return (
     <Stack>
-      <Header heading='All Books' />
-        
+      <Header heading='Settings' />
     </Stack>
   )
 }
 
-export default AllBooks
+export default AdminSettings

@@ -56,7 +56,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
-const DrawerHeader = styled("div")(({ theme }) => ({
+export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
@@ -72,6 +72,8 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
+  backgroundColor: 'white',
+  boxShadow: 'none',
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -103,15 +105,19 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const links = [
-  { text: "Dashboard", link: "/admin", icon: <DashboardIcon sx={{":active": {color: 'white'}}} /> },
-  { text: "All Books", link: "/admin/all-books", icon: <LibraryBooksIcon /> },
-  { text: "Add Book", link: "/admin/add-book", icon: <AddBoxIcon /> },
-  { text: "All Users", link: "/admin/all-users", icon: <PeopleIcon /> },
-  { text: "Settings", link: "/admin/admin-settings", icon: <ManageAccountsIcon /> },
-  { text: "Logout", link: "/login", icon: <LogoutIcon /> },
+  { text: "Dashboard", link: "/admin", icon:(active:boolean) => <DashboardIcon sx={{ color: active? 'white' : undefined }} /> },
+  { text: "All Books", link: "/admin/all-books", icon:(active:boolean) => <LibraryBooksIcon sx={{ color: active? 'white' : undefined }} /> },
+  { text: "Add Book", link: "/admin/add-book", icon:(active:boolean) => <AddBoxIcon sx={{ color: active? 'white' : undefined }} /> },
+  { text: "All Users", link: "/admin/all-users", icon:(active:boolean) => <PeopleIcon sx={{ color: active? 'white' : undefined }} /> },
+  { text: "Settings", link: "/admin/admin-settings", icon:(active:boolean) => <ManageAccountsIcon sx={{ color: active? 'white' : undefined }} /> },
+  { text: "Logout", link: "/login", icon:(active:boolean) => <LogoutIcon /> },
 ];
 
-export default function MiniDrawer() {
+export default function AdminSidebar({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -124,7 +130,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} sx={{'& .MuiDrawer-paper': {border:"none"}}} >
         <AppBar position="fixed" open={open} className={styles.appbar}>
           <Toolbar>
             <IconButton
@@ -146,13 +152,13 @@ export default function MiniDrawer() {
 
         <DrawerHeader />
 
-        <List>
+        <List >
           {
-          links.map((items, index) => (
+          links.map((items) => (
             <ListItem
               key={items.text}
               disablePadding
-              sx={{ display: "block", p:0.4 }}
+              sx={{ display: "block", p:0.5, fontFamily: "inherit" }}
               
             >
               <Link href={items.link} >
@@ -162,9 +168,10 @@ export default function MiniDrawer() {
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
                     borderRadius: 2,
-                    fontFamily: 'Poppins'
+                    fontFamily: "inherit",
+                    
                   }}
-                  className={pathname == items.link ? styles.active : "" }
+                  className={pathname === items.link ? styles.active : "" }
                 >
                   <ListItemIcon
                     sx={{
@@ -173,7 +180,7 @@ export default function MiniDrawer() {
                       justifyContent: "center",
                     }}
                   >
-                    {items.icon}
+                    {items.icon(pathname === items.link ? true : false)}
                   </ListItemIcon>
                   <ListItemText
                     sx={{ opacity: open ? 1 : 0 }}
@@ -185,37 +192,9 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: "#f8f9f8" }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: "#f8f9f8", height: '100vh' }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        {children}
       </Box>
     </Box>
   );

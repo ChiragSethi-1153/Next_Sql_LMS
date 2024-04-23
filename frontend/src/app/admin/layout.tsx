@@ -1,13 +1,13 @@
-import AdminNavbar from "@/components/Navbar/adminNavbar";
 import AdminSidebar from "@/components/Sidebar/adminSidebar";
-// import AdminSidebar from "@/components/Sidebar/adminSidebar";
-import { Stack } from "@mui/material";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 
 
-
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins( {
+  weight:  ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  style: "normal",
+  subsets: ["latin"]
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,13 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Stack>
-            <AdminSidebar />
-            
-            {children}
-        </Stack>  
-
+      <body className={poppins.className}>
+            <AdminSidebar>
+              {children}
+            </AdminSidebar>
         </body>
     </html>
   );
