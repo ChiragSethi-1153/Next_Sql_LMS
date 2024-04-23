@@ -72,9 +72,11 @@ const LoginForm = () => {
             console.log(role);
             if(role === 'admin') {
               router.push('/admin')
+              reset()
             }
             else{
               router.push('/');
+              reset()
             }
           //  redirect('/')
         }
