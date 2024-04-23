@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
 import React from 'react'
-import DashboardCard from '../Cards/DashboardCard'
+import DashboardCard from '../../atom/Cards/DashboardCard'
 import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';

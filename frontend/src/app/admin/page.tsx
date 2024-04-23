@@ -1,4 +1,4 @@
-import DashboardCard from "@/components/Cards/DashboardCard";
+import DashboardCard from "@/atom/Cards/DashboardCard";
 import DashBoardDetails from "@/components/DashBoard/DashBoardDetails";
 import Header from "@/components/Header/Header"
 import Welcome from "@/components/Welcome/Welcome";
