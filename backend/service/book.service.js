@@ -8,7 +8,7 @@ exports.addBook = async (req) => {
 
         if (role === 'admin') {
 
-            const { title, author, genre, stock } = req.body
+            const { title, author, genre, stock, description } = req.body
 
             let newImage = [];
             if (req.files !== null && req.files.images && req.files.images.length > 0) {
@@ -23,6 +23,7 @@ exports.addBook = async (req) => {
                 author,
                 admin: userId,
                 genre,
+                description,
                 stock: parseInt(stock),
                 coverImage: newImage
             })
@@ -48,7 +49,7 @@ exports.editBook = async (req) => {
 
         if (role === 'admin') {
             const { bookId } = req.query
-            const { title, author, stock, genre } = req.body
+            const { title, author, stock, genre, description } = req.body
             
 
                 let newImage = [];
@@ -63,6 +64,7 @@ exports.editBook = async (req) => {
                     title,
                     author,
                     genre,
+                    description,
                     stock: parseInt(stock),
                     // coverImage: newImage,
                 },

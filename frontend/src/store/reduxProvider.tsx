@@ -2,7 +2,6 @@
 import { Provider } from "react-redux";
 import {persistor, store } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
-import { persistStore } from "redux-persist";
 
 
 export default function ReduxProvider({

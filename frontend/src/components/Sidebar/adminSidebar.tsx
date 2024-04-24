@@ -192,7 +192,7 @@ export default function AdminSidebar({
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: "#f8f9f8", height: '100vh' }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: "#f8f9f8", minHeight: '100vh' }}>
         <DrawerHeader />
         {children}
       </Box>
