@@ -26,8 +26,8 @@ const initialState: initialStateProps = {
   ],
 };
 
-export const bookSlice = createSlice({
-  name: "books",
+export const userSlice = createSlice({
+  name: "users",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -79,4 +79,4 @@ export const bookSlice = createSlice({
   },
 });
 
-export default bookSlice.reducer;
+export default userSlice.reducer;

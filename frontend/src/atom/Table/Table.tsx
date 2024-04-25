@@ -10,29 +10,26 @@ import Paper from "@mui/material/Paper";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { books } from "@/features/Books/bookSlice";
-
-function createData(
-  bookId: string,
-  title: string,
-  author: string,
-  genre: string,
-  stock: number,
-  action: any
-) {
-  return { bookId, title, author, genre, stock, action };
-}
+import { tableHeadings } from "@/@types/tableTypes";
+import { users } from "@/@types/userType";
+import Cell from "./Cell";
 
 
+export default function BasicTable({
+  rows,
+  headings,
+  tableHeading,
+  tableData
+}: {
+  rows: books[] | users[];
+  headings: tableHeadings;
+  tableHeading: string,
+  tableData: string
+}) {
+  console.log(rows);
+  // type t =  ReturnType<typeof rows>
+  // console.log(t)
 
-export default function BasicTable({rows}: {rows: books[]}) {
-  console.log(rows)
-  
-  // const rows = [
-  //   createData(items[0].id,items[0].title,items[0].author,items[0].genre,items[0].stock,<MoreVertOutlinedIcon />),
-  //   createData(items[1].id,items[1].title,items[1].author,items[1].genre,items[1].stock,<MoreVertOutlinedIcon />),
-  //   createData(items[2].id,items[2].title,items[2].author,items[2].genre,items[2].stock,<MoreVertOutlinedIcon />),
-  //   ];
-  
   return (
     <TableContainer
       component={Paper}
@@ -47,9 +44,11 @@ export default function BasicTable({rows}: {rows: books[]}) {
         padding={2}
       >
         <Typography fontFamily={"Poppins"} fontWeight={500} fontSize={19}>
-          Books List
+          {tableHeading}
         </Typography>
-        <Button
+        {
+        tableData=== "books" ?
+          <Button
           variant="outlined"
           sx={{
             textTransform: "none",
@@ -60,55 +59,39 @@ export default function BasicTable({rows}: {rows: books[]}) {
               borderColor: "black",
               bgcolor: "#f8f9f8",
             },
-          }}
-        >
+          }} 
+          >
           Add Book
-        </Button>
+        </Button> 
+        : <></>
+        }
       </Stack>
 
       <Table sx={{ minWidth: 250 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell
-              align="left"
-              sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
-            >
-              Book Id
-            </TableCell>
-            <TableCell
-              align="left"
-              sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
-            >
-              Title
-            </TableCell>
-            <TableCell
-              align="left"
-              sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
-            >
-              Author
-            </TableCell>
-            <TableCell
-              align="left"
-              sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
-            >
-              Genre
-            </TableCell>
-            <TableCell
-              align="left"
-              sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
-            >
-              Available
-            </TableCell>
-            <TableCell
-              align="left"
-              sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
-            >
-              Action
-            </TableCell>
+            {
+            headings.map((i) => {
+              return (
+                <TableCell
+                  key={i}
+                  align="left"
+                  sx={{ color: "#b5b4b4", fontFamily: "Poppins" }}
+                >
+                  {i}
+                </TableCell>
+              );
+            })}
+            
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {
+          tableData === "books" ?
+
+          rows.map((row) => (
+            
+            // <Cell key={row.id} row={row} />
             <TableRow
               key={row.id}
               // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -117,7 +100,7 @@ export default function BasicTable({rows}: {rows: books[]}) {
                 align="left"
                 sx={{ color: "black", fontFamily: "Poppins" }}
               >
-                {row.id}
+                {row.id.substring(0, 8)}
               </TableCell>
               <TableCell
                 align="left"
@@ -150,11 +133,69 @@ export default function BasicTable({rows}: {rows: books[]}) {
                 <MoreVertOutlinedIcon />
               </TableCell>
             </TableRow>
-          ))}
+          ))
+          : 
+          rows.map((row) => (
+            
+            // <Cell key={row.id} row={row} />
+            <TableRow
+              key={row.id}
+              // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell
+                align="left"
+                sx={{ color: "black", fontFamily: "Poppins" }}
+              >
+                {row.id.substring(0, 8)}
+              </TableCell>
+              <TableCell
+                align="left"
+                sx={{ color: "black", fontFamily: "Poppins" }}
+              >
+                {row.name}
+              </TableCell>
+              <TableCell
+                align="left"
+                sx={{ color: "black", fontFamily: "Poppins" }}
+              >
+                {row.email}
+              </TableCell>
+              <TableCell
+                align="left"
+                sx={{ color: "black", fontFamily: "Poppins" }}
+              >
+                {row.borrowed}
+              </TableCell>
+              <TableCell
+                align="left"
+                sx={{ color: "black", fontFamily: "Poppins" }}
+              >
+                <MoreVertOutlinedIcon />
+              </TableCell>
+            </TableRow>
+          ))
+        }
         </TableBody>
       </Table>
-      <Box sx={{display: "flex", width: '100%', boxSizing: 'border-box', p:1, justifyContent: 'flex-end'}}>
-        <Button sx={{textTransform: 'none', color: '#f75866', fontWeight: 600, "&:hover": {bgcolor: '#f7586629'} }} >See All</Button>
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          boxSizing: "border-box",
+          p: 1,
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button
+          sx={{
+            textTransform: "none",
+            color: "#f75866",
+            fontWeight: 600,
+            "&:hover": { bgcolor: "#f7586629" },
+          }}
+        >
+          See All
+        </Button>
       </Box>
     </TableContainer>
   );

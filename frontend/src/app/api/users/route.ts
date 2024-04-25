@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export async function GET() {
     try{
 
-        const res  = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books`, {
+        const res  = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, {
             method: "GET"}
         )
 
