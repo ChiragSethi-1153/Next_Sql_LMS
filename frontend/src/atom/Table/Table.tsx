@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import { books } from "@/features/Books/bookSlice";
 
 function createData(
   bookId: string,
@@ -21,36 +22,17 @@ function createData(
   return { bookId, title, author, genre, stock, action };
 }
 
-const rows = [
-  createData(
-    "1",
-    "Frozen yoghurt",
-    "Dale",
-    "fantasy",
-    6,
-    <MoreVertOutlinedIcon />
-  ),
-  createData(
-    "2",
-    "Ice cream sandwich",
-    "john",
-    "fiction",
-    9,
-    <MoreVertOutlinedIcon />
-  ),
-  createData("3", "Eclair", "Faf", "non-fiction", 16, <MoreVertOutlinedIcon />),
-  createData("4", "Cupcake", "Kevin", "Romance", 3, <MoreVertOutlinedIcon />),
-  createData(
-    "5",
-    "Gingerbread",
-    "Rudyard",
-    "Education",
-    16,
-    <MoreVertOutlinedIcon />
-  ),
-];
 
-export default function BasicTable() {
+
+export default function BasicTable({rows}: {rows: books[]}) {
+  console.log(rows)
+  
+  // const rows = [
+  //   createData(items[0].id,items[0].title,items[0].author,items[0].genre,items[0].stock,<MoreVertOutlinedIcon />),
+  //   createData(items[1].id,items[1].title,items[1].author,items[1].genre,items[1].stock,<MoreVertOutlinedIcon />),
+  //   createData(items[2].id,items[2].title,items[2].author,items[2].genre,items[2].stock,<MoreVertOutlinedIcon />),
+  //   ];
+  
   return (
     <TableContainer
       component={Paper}
@@ -128,14 +110,14 @@ export default function BasicTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.bookId}
+              key={row.id}
               // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell
                 align="left"
                 sx={{ color: "black", fontFamily: "Poppins" }}
               >
-                {row.bookId}
+                {row.id}
               </TableCell>
               <TableCell
                 align="left"
@@ -165,7 +147,7 @@ export default function BasicTable() {
                 align="left"
                 sx={{ color: "black", fontFamily: "Poppins" }}
               >
-                {row.action}
+                <MoreVertOutlinedIcon />
               </TableCell>
             </TableRow>
           ))}

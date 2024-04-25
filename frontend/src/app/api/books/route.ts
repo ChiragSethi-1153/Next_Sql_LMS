@@ -4,14 +4,17 @@ import { NextResponse } from "next/server"
 export async function GET() {
     try{
 
-        const res  = await axios.get(`${process.env.REACT_APP_SERVER_URL}/books`)
-        console.log(res.data)
+        const res  = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books`, {
+            method: "GET"}
+        )
+
+        const response = await res.json()
         
-        if(!res) {
+        if(!response) {
                 alert("submitting form failed")
                 return
             }
-            return NextResponse.json(res.data)
+            return NextResponse.json(response)
         
         }catch(err){
             console.log(err)

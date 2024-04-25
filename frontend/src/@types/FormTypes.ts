@@ -1,4 +1,3 @@
-import React from "react"
 
 export type inputField ={
     variant: "outlined" | "filled" | 'standard',
@@ -8,5 +7,4 @@ export type inputField ={
     sxProps: any,
     // value: any,
     onChange: ((e: any) => void)
-
 }

@@ -1,6 +1,6 @@
-const { where } = require('sequelize')
+
 const {users, books} = require('../models')
-const { attribute } = require('@sequelize/core/_non-semver-use-at-your-own-risk_/expression-builders/attribute.js')
+
 
 exports.getAllUsers = async (req) => {
     try {
@@ -18,8 +18,13 @@ exports.getAllUsers = async (req) => {
                 }
         }
         else {
-            
+            const user = await users.findAll({where: { role: "user"}, attributes: {exclude: ['password']}}  )
+            if(user){
+                return user
+            }
+            else{
                 return 404
+            }
         }
  
     } catch (err) {

@@ -10,7 +10,7 @@ export async function POST(request: Request) {
         console.log(a)
         // const result = registerSchema.safeParse(a)
         // console.log(result)
-        const res  = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, a)
+        const res  = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/signup`, a)
         console.log(res)
         
         if(!res) {
