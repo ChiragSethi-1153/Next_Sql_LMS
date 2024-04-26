@@ -43,6 +43,7 @@ export const authSlice = createSlice({
         })
         builder.addCase(loginUsers.fulfilled, (state, action) => {
             state.isLoading = false
+            state.isLoggedIn=true
             // console.log(action.payload)
             state.content = action.payload
         })
@@ -55,6 +56,7 @@ export const authSlice = createSlice({
         })
         builder.addCase(registerUsers.fulfilled, (state, action) => {
             state.isLoading = false
+          
         })
         builder.addCase(registerUsers.rejected, (state, action) => {
             state.isLoading = false

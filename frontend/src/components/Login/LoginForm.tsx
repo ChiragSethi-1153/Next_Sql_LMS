@@ -78,7 +78,7 @@ const LoginForm = () => {
               router.push('/');
               reset()
             }
-          //  redirect('/')
+           redirect('/')
         }
     });;
 
@@ -131,7 +131,7 @@ const LoginForm = () => {
           disabled={isSubmitting}
           onClick={handleSubmit(onSubmit)}
         >
-          Sign up
+          Sign in
         </Button>
         
         <Link href={'/register'} style={{textAlign: 'center'}}>

@@ -8,7 +8,7 @@ export const getUsers = createAsyncThunk(getUsersType, async (_, { rejectWithVal
     try {
         
         const response = await fetchUsers()
-        console.log(response)
+        // console.log(response)
         // const data = response?.data
         // console.log(data)
         return response

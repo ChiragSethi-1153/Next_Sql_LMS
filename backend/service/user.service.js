@@ -1,5 +1,5 @@
 
-const {users, books} = require('../models')
+const {users, books, issues} = require('../models')
 
 
 exports.getAllUsers = async (req) => {
@@ -11,6 +11,8 @@ exports.getAllUsers = async (req) => {
         if (role) {
                 const user = await users.findAll({where: { role: role}, attributes: {exclude: ['password']}}  )
                 if(user){
+                    const borrowed = await issues.count({where: {userId: user.id}})
+                    console.log(borrowed)
                     return user
                 }
                 else{
@@ -18,10 +20,21 @@ exports.getAllUsers = async (req) => {
                 }
         }
         else {
-            const user = await users.findAll({where: { role: "user"}, attributes: {exclude: ['password']}}  )
+            const user = await users.findAll({where: { role: "user"}, attributes: {exclude: ['password']}})
+            
             if(user){
-                return user
+                let borrowed
+              const newUserWithIssue= user.map(async (i) => {
+                        let newValue=i.toJSON();
+                    borrowed = await issues.count({where: {userId: i.id}})
+                    newValue['borrowed']= borrowed
+                    return newValue;
+                })
+                const data= await Promise.all(newUserWithIssue);
+                return data;
+                
             }
+
             else{
                 return 404
             }

@@ -18,54 +18,23 @@ import Cell from "./Cell";
 export default function BasicTable({
   rows,
   headings,
-  tableHeading,
   tableData
 }: {
   rows: books[] | users[];
   headings: tableHeadings;
-  tableHeading: string,
   tableData: string
 }) {
   console.log(rows);
   // type t =  ReturnType<typeof rows>
   // console.log(t)
+  
 
   return (
     <TableContainer
       component={Paper}
-      sx={{ boxSizing: "border-box", pl: 2, pr: 2, borderRadius: 8 }}
       elevation={0}
     >
-      <Stack
-        direction={"row"}
-        width={"100%"}
-        justifyContent={"space-between"}
-        boxSizing={"border-box"}
-        padding={2}
-      >
-        <Typography fontFamily={"Poppins"} fontWeight={500} fontSize={19}>
-          {tableHeading}
-        </Typography>
-        {
-        tableData=== "books" ?
-          <Button
-          variant="outlined"
-          sx={{
-            textTransform: "none",
-            color: "black",
-            borderColor: "black",
-            "&:hover": {
-              color: "black",
-              borderColor: "black",
-              bgcolor: "#f8f9f8",
-            },
-          }} 
-          >
-          Add Book
-        </Button> 
-        : <></>
-        }
-      </Stack>
+      
 
       <Table sx={{ minWidth: 250 }} aria-label="simple table">
         <TableHead>
@@ -89,7 +58,7 @@ export default function BasicTable({
           {
           tableData === "books" ?
 
-          rows.map((row) => (
+          rows && rows.map((row) => (
             
             // <Cell key={row.id} row={row} />
             <TableRow
@@ -135,7 +104,7 @@ export default function BasicTable({
             </TableRow>
           ))
           : 
-          rows.map((row) => (
+          rows && rows.length>0 && rows?.map((row) => (
             
             // <Cell key={row.id} row={row} />
             <TableRow
@@ -177,26 +146,6 @@ export default function BasicTable({
         }
         </TableBody>
       </Table>
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
-          boxSizing: "border-box",
-          p: 1,
-          justifyContent: "flex-end",
-        }}
-      >
-        <Button
-          sx={{
-            textTransform: "none",
-            color: "#f75866",
-            fontWeight: 600,
-            "&:hover": { bgcolor: "#f7586629" },
-          }}
-        >
-          See All
-        </Button>
-      </Box>
     </TableContainer>
   );
 }

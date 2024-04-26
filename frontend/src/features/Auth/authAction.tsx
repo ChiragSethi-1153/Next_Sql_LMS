@@ -13,7 +13,7 @@ export const registerUsers = createAsyncThunk(signupType, async (inputs: FieldVa
         const response = await registerService(inputs)
         // console.log(response)
         const data = response?.data
-        console.log(data)
+        // console.log(data)
         return data
     } catch (err) {
         console.log(err)
@@ -28,7 +28,7 @@ export const loginUsers = createAsyncThunk(loginType, async (inputs: FieldValues
         const response = await loginService(inputs)
         // console.log(response)
         const data = await response.data
-        console.log(data)
+        // console.log(data)
         return data
     }catch(err) {
         console.log(err)

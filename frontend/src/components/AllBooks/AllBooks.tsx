@@ -14,10 +14,12 @@ const AllBooks = () => {
     }, [dispatch])
 
     const books = useAppSelector((state) => state.book.content)
+    
     console.log(books)
   return (
     <Grid container gap={3} >
         {/* <Grid item xs={12} sm={6} m={4} lg={2} > */}
+
         {
             books && books.length>0 &&
             books.map((items) => {

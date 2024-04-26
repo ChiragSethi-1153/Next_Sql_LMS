@@ -8,7 +8,7 @@ export const getBooks = createAsyncThunk(getBooksType, async (_, { rejectWithVal
     try {
         
         const response = await fetchBooks()
-        console.log(response)
+        // console.log(response)
         // const data = response?.data
         // console.log(data)
         return response
