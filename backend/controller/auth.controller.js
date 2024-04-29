@@ -45,9 +45,9 @@ exports.login = async (req, res) => {
         //     return res.status(501).json({message: "Account has not been added yet"})
         // }
         const { data, token } = response
-        return res.cookie("authorization", token)
+        return res
             .status(200)
-            .json({ message: "Successfully Logged In", user: data })
+            .json({ message: "Successfully Logged In", user: data, token })
 
     }
     catch (err) {

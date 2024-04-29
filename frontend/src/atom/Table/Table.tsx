@@ -58,8 +58,8 @@ export default function BasicTable({
           {
           tableData === "books" ?
 
-          rows && rows.map((row) => (
-            
+          rows && rows.map((row, index) => (
+            index < 5 &&
             // <Cell key={row.id} row={row} />
             <TableRow
               key={row.id}
@@ -104,8 +104,8 @@ export default function BasicTable({
             </TableRow>
           ))
           : 
-          rows && rows.length>0 && rows?.map((row) => (
-            
+          rows && rows.length>0 && rows?.map((row, index) => (
+            index < 5 && 
             // <Cell key={row.id} row={row} />
             <TableRow
               key={row.id}

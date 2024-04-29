@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { loginType, signupType } from './authType'
-import registerService from '@/service/Auth/register.service'
+import registerService from '@/service/Auth/login.service'
 import type {FieldValues} from "react-hook-form";
-import loginService from '@/service/Auth/register.service';
+import loginService from '@/service/Auth/login.service';
 
 
 

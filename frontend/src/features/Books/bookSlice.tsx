@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getBooks } from './bookAction';
+import { addBooks, getBook, getBooks } from './bookAction';
 
 export type books = {
     id: string,
@@ -21,7 +21,16 @@ type initialStateProps = {
         description: string,
         stock: number ,
         coverImage: string[]
-    }[] 
+    }[],
+    single: {
+        id: string,
+        title: string,
+        author: string,
+        genre: string,
+        description: string,
+        stock: number ,
+        coverImage: string[]
+    }, 
     error: Object | null;
   };
 
@@ -37,6 +46,15 @@ type initialStateProps = {
         stock: 0,
         coverImage: [""]
     }],
+    single: {
+        id: "",
+        title: "",
+        author: "",
+        genre: "",
+        description: "",
+        stock: 0 ,
+        coverImage: [""]
+    }
   };
 
 export const bookSlice = createSlice({
@@ -56,18 +74,31 @@ export const bookSlice = createSlice({
             state.error = action.error
             state.content = []
         })
-        // builder.addCase(createQuestions.pending, (state) => {
-        //     state.isLoading = true
-        // })
-        // builder.addCase(createQuestions.fulfilled, (state, action) => {
-        //     state.isLoading = false
-        //     state.content = [...state.content, action.payload]
-        // })
-        // builder.addCase(createQuestions.rejected, (state, action) => {
-        //     state.isLoading = false
-        //     state.content = []
-        //     state.error = action.error
-        // })
+        builder.addCase(addBooks.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(addBooks.fulfilled, (state, action) => {
+            state.isLoading = false
+            console.log(action.payload)
+            state.content = [...state.content, action.payload]
+        })
+        builder.addCase(addBooks.rejected, (state, action) => {
+            state.isLoading = false
+            state.content = []
+            state.error = action.error
+        })
+        builder.addCase(getBook.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(getBook.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.single = action.payload
+        })
+        builder.addCase(getBook.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = action.error
+            state.content = []
+        })
 
         // builder.addCase(updateQuestion.pending, (state) => {
         //     state.isLoading = true

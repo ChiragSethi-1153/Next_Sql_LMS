@@ -6,9 +6,16 @@ export async function GET() {
   try {
     const token = cookies().get("authorization");
     console.log(token);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, {
-        credentials: 'include'
-    });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/users`, 
+        {
+          headers:  {
+            Cookie: cookies().get("authorization")?.value
+          },
+          next: {
+            revalidate: 3600
+          }
+        }  
+  );
 
     const response = await res.json();
     console.log(response)

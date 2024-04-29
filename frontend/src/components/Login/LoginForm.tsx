@@ -68,7 +68,7 @@ const LoginForm = () => {
         else {
             console.log("response payload", response.payload);
             
-            const role = response?.payload?.user?.role;
+            const role = response?.payload?.role;
             console.log(role);
             if(role === 'admin') {
               router.push('/admin')
@@ -78,7 +78,7 @@ const LoginForm = () => {
               router.push('/');
               reset()
             }
-           redirect('/')
+           
         }
     });;
 

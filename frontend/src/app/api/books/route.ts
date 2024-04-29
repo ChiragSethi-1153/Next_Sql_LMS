@@ -1,4 +1,5 @@
 import axios from "axios"
+import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export async function GET() {
@@ -20,13 +21,21 @@ export async function GET() {
 
     export async function POST(request: Request) {
         try{
-    
             // console.log(await request.json())
-            const a = await request.json()
-            console.log(a)
+            // console.log(await request.json())
+            const bookData = await request.formData()
+            console.log(bookData)
             // const result = registerSchema.safeParse(a)
             // console.log(result)
-            const res  = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/books`, a)
+            const res  = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/books`, bookData, 
+            {
+                headers:  {
+                "Content-Type": 'multipart/form-data',
+                  Cookie: cookies().get("authorization")?.value
+                }
+              }
+
+            )
             console.log(res)
             
             if(!res) {

@@ -1,4 +1,4 @@
-
+import 'tailwindcss/tailwind.css';
 import DashBoardDetails from "@/components/DashBoard/DashBoardDetails";
 import DashBoardTables from "@/components/DashBoard/DashBoardTables";
 import Header from "@/components/Header/Header"

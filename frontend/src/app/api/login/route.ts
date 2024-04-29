@@ -1,7 +1,6 @@
-import { cookies } from "next/headers";
 import axios from "axios";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { registerSchema } from "@/components/Register/RegisterForm";
 
 axios.defaults.withCredentials = true;
 
@@ -17,19 +16,18 @@ export async function POST(request: Request) {
       a,
     );
     console.log(res)
-    const token : any = res.headers["set-cookie"];
-    console.log(token[0])
+    const token = res.data.token;
 
-    // cookies().set("authorization", token[0], {
-    //   httpOnly: true,
-    //   secure: false,
-    // });
+    cookies().set("authorization", token, {
+      httpOnly: true,
+      secure: false,
+    });
 
     if (!res) {
       alert("submitting form failed");
       return;
     }
-    return NextResponse.json(res.data).cookies.set("authorization", token[0]);
+    return NextResponse.json(res.data.user)
 
   } catch (err) {
     console.log(err);

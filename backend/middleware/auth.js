@@ -4,12 +4,13 @@ const key = process.env.JWT_KEY
 
 exports.verifyToken = async (req, res, next) => {
     try {
-        console.log(req.cookies)
-        const token = req.cookies.authorization
+        console.log(req.headers)
+        const token = req.headers.cookie
+        console.log(token)
         
         // console.log(header)
         // console.log(req.headers)
-        // const token = header.split(" ")[1]
+        // const token = req.headers.cookie.split(" ")[1]
         // console.log(token)
 
         if (!token) {

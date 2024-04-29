@@ -6,7 +6,7 @@ import React from 'react'
 
 const Welcome = () => {
 
-    const user = useAppSelector((state) => state.auth.content.user)
+    const user = useAppSelector((state) => state.auth.content)
     
     let date = new Date()
     let day = date.getDay()
@@ -23,7 +23,7 @@ const Welcome = () => {
   return (
     <Stack>
     <Typography fontWeight={500} fontSize={24} fontFamily={"Poppins"} >
-      Hello, <span style={{color: '#f75866'}}>{user.name}!</span>
+      Hello, <span style={{color: '#f75866'}}>{user?.name}!</span>
     </Typography>
     <Typography fontWeight={500} fontSize={16} fontFamily={"Poppins"}>
         {currentDay}
