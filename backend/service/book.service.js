@@ -50,31 +50,47 @@ exports.editBook = async (req) => {
         if (role === 'admin') {
             const { bookId } = req.query
             const { title, author, stock, genre, description } = req.body
-            
+            const obj = {}
+            if(title){
+                obj.title = title;
+            }
+            if(author){
+                obj.author = author;
+            }
+            if(stock){
+                obj.stock = stock;
+            }
+            if(genre){
+                obj.genre = genre
+            }
+            if(description) {
+                obj.description = description
+            }
 
-                let newImage = [];
-                if (req.files !== null && req.files.images && req.files.images.length > 0) {
-                    newImage = req.files.images.map((i) => {
-                        return i.path;
-                    });
-                    console.log(newImage, "ghvugyiv");
-                }
+            console.log("obj", obj);
+
+                // let newImage = [];
+                // if (req.files !== null && req.files.images && req.files.images.length > 0) {
+                //     newImage = req.files.images.map((i) => {
+                //         return i.path;
+                //     });
+                //     console.log(newImage, "ghvugyiv");
+                // }
                 
                 const book = await books.update({
-                    title,
-                    author,
-                    genre,
-                    description,
-                    stock: parseInt(stock),
-                    // coverImage: newImage,
+                    ...obj
                 },
                 {
                     where: {
                         id: bookId,
                         admin: userId
-                    }
+                    },
+                    returning: true,
+                    plain: true,
+
                 }
             )
+
             if(book){
                 console.log(book)   
                 return book

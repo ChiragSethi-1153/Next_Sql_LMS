@@ -137,7 +137,7 @@ const LoginForm = () => {
         <Link href={'/register'} style={{textAlign: 'center'}}>
           Don't have an account{" "}
           <span
-            style={{ color: "#0b66c2", fontWeight: "600", cursor: "pointer" }}
+            style={{ color: "#f75866", fontWeight: "600", cursor: "pointer" }}
           >
             Sign Up?
           </span>

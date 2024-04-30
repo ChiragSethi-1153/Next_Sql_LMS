@@ -31,5 +31,7 @@ export async function POST(request: Request) {
 
   } catch (err) {
     console.log(err);
+    alert("submitting form failed");
+      return;
   }
 }

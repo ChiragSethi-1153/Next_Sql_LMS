@@ -150,7 +150,7 @@ const AddBook = () => {
             inputProps: { min: 0 },
           }}
           value={inputs.stock}
-          onChange={(e) => setInputs({ ...inputs, stock: e.target.value })}
+          onChange={(e) => setInputs({ ...inputs, stock: parseInt(e.target.value) })}
         />
         <TextField
           label="Description"

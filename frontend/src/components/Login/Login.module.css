@@ -14,6 +14,7 @@
   }
   
   .loginBtn {
+    background-color: #f75866 !important;
       text-transform: none !important;
       width: 100%;
       box-shadow: none !important;

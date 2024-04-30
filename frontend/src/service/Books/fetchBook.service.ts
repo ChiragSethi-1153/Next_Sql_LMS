@@ -1,6 +1,6 @@
 import axios from "axios"
 
- const fetchBook = async (bookId: string) => {
+ const fetchBook = async (bookId: string|string[]) => {
     //    console.log(bookId)
         const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/books/${bookId}`)
         const resp = await response.json()

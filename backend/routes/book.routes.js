@@ -7,7 +7,7 @@ const router = require('express').Router()
 router.post("/books", verifyToken, upload, bookController.addBook)
 router.get("/books", bookController.getAllBooks)
 router.get("/books/:bookId", bookController.getBook)
-router.put("/books", verifyToken, upload, bookController.editBook)
+router.put("/books", verifyToken, bookController.editBook)
 router.delete("/books/:bookId", verifyToken, bookController.deleteBook)
 
 module.exports = router 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { addBooks, getBook, getBooks } from './bookAction';
+import { addBooks, getBook, getBooks, updateBook } from './bookAction';
 
 export type books = {
     id: string,
@@ -77,7 +77,7 @@ export const bookSlice = createSlice({
         builder.addCase(addBooks.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(addBooks.fulfilled, (state, action) => {
+        builder.addCase(addBooks.fulfilled, (state, action: any) => {
             state.isLoading = false
             console.log(action.payload)
             state.content = [...state.content, action.payload]
@@ -100,26 +100,25 @@ export const bookSlice = createSlice({
             state.content = []
         })
 
-        // builder.addCase(updateQuestion.pending, (state) => {
-        //     state.isLoading = true
-        // })
-        // builder.addCase(updateQuestion.fulfilled, (state, action) => {
-        //     state.isLoading = false
+        builder.addCase(updateBook.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(updateBook.fulfilled, (state, action) => {
+            state.isLoading = false
+            console.log(action.payload)
+            // state.single = state.content.map((book) => {
+            //     if (book.id === action.payload.id) {
+            //         return action.payload
+            //     }
+            //     else
+            //         return book
+            // })
 
-        //     state.content = state.content.map((question) => {
-
-        //         if (question._id === action.payload._id) {
-        //             return action.payload
-        //         }
-        //         else
-        //             return question
-        //     })
-
-        // })
-        // builder.addCase(updateQuestion.rejected, (state, action) => {
-        //     state.isLoading = false
-        //     state.error = action.error
-        // })
+        })
+        builder.addCase(updateBook.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = action.error
+        })
 
     }
 })
