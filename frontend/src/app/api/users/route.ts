@@ -18,7 +18,7 @@ export async function GET() {
   );
 
     const response = await res.json();
-    console.log(response)
+    
     if (!response) {
       return 404;
     }

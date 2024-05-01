@@ -19,6 +19,11 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { common } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
+import { useAppDispatch } from "@/store/hooks";
+import { getBooks, getSearchedBooks } from "@/features/Books/bookAction";
+import SearchList from "../SearchList/SearchList";
+import { Button } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +43,7 @@ const Search = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
+  // minWidth: '300px',
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -47,6 +53,7 @@ const Search = styled("div")(({ theme }) => ({
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
+  // width: "100%",
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
@@ -60,10 +67,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingRight: "20px",
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "100%",
+      paddingRight: "20px",
     },
   },
 }));
@@ -167,6 +176,21 @@ export default function AdminNavbar() {
     </Menu>
   );
 
+  const dispatch = useAppDispatch();
+  const [searchBody, setSearchBody] = React.useState("");
+  const handleSearch = async (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    e.preventDefault();
+    setSearchBody(e.target.value);
+  };
+
+  React.useEffect(() => {
+    if (searchBody !== "") {
+      dispatch(getSearchedBooks(searchBody));
+    }
+  }, [dispatch, searchBody]);
+
   return (
     <Box
       sx={{
@@ -189,18 +213,26 @@ export default function AdminNavbar() {
           <SearchIcon sx={{ color: "black" }} />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder="Search…"
+          sx={{ fontFamily: "Poppins" }}
+          placeholder="Search Books by title, author or genre…"
           inputProps={{ "aria-label": "search" }}
+          value={searchBody}
+          onChange={(e) => handleSearch(e)}
         />
+        {searchBody && <SearchList clear={() => setSearchBody('')} />}
+        {searchBody && <Button onClick={() => setSearchBody('')} sx={{'&:hover': {background: 'none'}}} ><CloseIcon sx={{color: "black"}} /></Button>}
       </Search>
       <Box sx={{ display: { xs: "none", md: "flex" } }} gap={2}>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} sx={{
+          <Badge
+            badgeContent={4}
+            sx={{
               "& .MuiBadge-badge": {
                 color: "white",
                 backgroundColor: "black",
               },
-            }}>
+            }}
+          >
             <MailIcon sx={{ color: "#f75866" }} />
           </Badge>
         </IconButton>

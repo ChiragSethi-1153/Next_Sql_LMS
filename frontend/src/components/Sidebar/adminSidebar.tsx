@@ -152,24 +152,22 @@ export default function AdminSidebar({
 
         <DrawerHeader />
 
-        <List >
+        <List>
           {
           links.map((items) => (
             <ListItem
               key={items.text}
               disablePadding
-              sx={{ display: "block", p:0.5, fontFamily: "inherit" }}
+              sx={{ display: "block", p:0.5 }}
               
             >
-              <Link href={items.link} >
+              <Link href={items.link}  >
                 <ListItemButton
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
-                    borderRadius: 2,
-                    fontFamily: "inherit",
-                    
+                    borderRadius: 2                    
                   }}
                   className={pathname === items.link ? styles.active : "" }
                 >
@@ -182,9 +180,11 @@ export default function AdminSidebar({
                   >
                     {items.icon(pathname === items.link ? true : false)}
                   </ListItemIcon>
+                  {/* <Typography sx={{ opacity: open ? 1 : 0, fontFamily: 'Poppins' }} >{items.text}</Typography> */}
                   <ListItemText
                     sx={{ opacity: open ? 1 : 0 }}
                     primary={items.text}
+                    primaryTypographyProps={{fontFamily: 'Poppins' }}
                   />
                 </ListItemButton>
               </Link>

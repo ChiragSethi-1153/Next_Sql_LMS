@@ -6,7 +6,11 @@ export async function GET(request: NextRequest,  { params }: { params: { bookId:
   try {
     
     console.log(params.bookId)
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${params.bookId}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/books/${params.bookId}`,
+      {
+        cache: 'no-cache'
+      }
+    );
 
     const response = await res.json();
 
@@ -26,7 +30,7 @@ export async function PUT(request: Request,  { params }: { params: { bookId: str
       const bookData = await request.json()
       console.log(bookData)
      
-      const res  = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/books?bookId=${params.bookId}`, bookData, 
+      const res  = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_URL}/books?bookId=${params.bookId}`, bookData, 
       {
           headers:  {
             Cookie: cookies().get("authorization")?.value
@@ -34,7 +38,7 @@ export async function PUT(request: Request,  { params }: { params: { bookId: str
         }
 
       )
-      console.log(res)
+      console.log(res.data)
       
       if(!res) {
               alert("submitting form failed")

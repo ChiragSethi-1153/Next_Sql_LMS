@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { createBooktype, editBookType, getBookType, getBooksType } from './bookType';
+import { createBooktype, editBookType, getBookType, getBooksType, searchBookType } from './bookType';
 import fetchBooks from '@/service/Books/getBooks.service';
 import createBook from '@/service/Books/addBook.service';
 import fetchBook from '@/service/Books/fetchBook.service';
 import editBook from '@/service/Books/editBook.service';
+import fetchSearch from '@/service/Books/fetchSearch.service';
 
 
 
@@ -65,3 +66,16 @@ export const updateBook = createAsyncThunk(editBookType, async (inputs: any, { r
 
 
 
+export const getSearchedBooks = createAsyncThunk(searchBookType, async (input: string, { rejectWithValue }) => {
+    try {
+        console.log(input)
+        const response = await fetchSearch(input)
+        console.log(response)
+        // const data = response?.data
+        // console.log(data)
+        return response
+    } catch (err) {
+        console.log(err)
+        return rejectWithValue(err)
+    }
+})

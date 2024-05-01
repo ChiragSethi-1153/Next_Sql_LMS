@@ -53,7 +53,7 @@ const EditBook = ({ props, hide }: { props: bookprops; hide: hideProps }) => {
     e.preventDefault()
     const data = {id: props.id, details}
     dispatch(updateBook(data))
-    
+    hide()
   }
 
   return (

@@ -53,6 +53,9 @@ exports.deleteBook = async(req, res) => {
 exports.getAllBooks = async (req, res) => {
     try{
         const response = await bookService.getAllBooks(req)
+        if(response === 404){
+            return res.status(404).json({message: "No book found"})
+        }
         return res.status(200).json(response)
     }
     catch(err){

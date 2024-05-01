@@ -92,8 +92,12 @@ exports.editBook = async (req) => {
             )
 
             if(book){
-                console.log(book)   
-                return book
+                let data
+                book.map((i) => {
+                    data = i
+                }) 
+                console.log(data)
+                return data
             }
             else{
                 return 401
@@ -156,11 +160,21 @@ exports.getAllBooks = async (req) => {
                 },
                 limit: 10
             })
-            return allbooks
+            if(allbooks.length > 0){
+                return allbooks
+            }
+            else{
+                return 404
+            }
         }
         else {
             const allbooks = await books.findAll({ where: {}, include: [{ model: users, where: {}, attributes: {exclude: ['password'] }}], limit: 10 })
-            return allbooks
+            if(allbooks.length > 0){
+                return allbooks
+            }
+            else{
+                return 404
+            }
         }
 
     } catch (err) {
